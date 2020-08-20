@@ -51,6 +51,10 @@ node {
                 println rc
 		}
 		
+		    
+		//-------------------------------------------------------------------------
+		// Deploy metadata and execute unit tests for metadata package zip file
+		// -------------------------------------------------------------------------
 		
 		//stage('Deploy and Run Tests'){
 			//rc = command "\"${toolbelt}\" force:mdapi:deploy -f release_1.zip -u ${HUB_ORG} -l ${TEST_LEVEL}"
@@ -66,24 +70,13 @@ node {
 			//rc = command "\"${toolbelt}\" force:source:deploy  -x manifest/package.xml -u ${HUB_ORG} -l ${TEST_LEVEL}"
 			//rc = command "\"${toolbelt}\" force:source:deploy  -p force-app/. -u ${HUB_ORG} -l ${TEST_LEVEL}"
 			rc = command "\"${toolbelt}\" force:source:deploy  -p force-app/. -u ${HUB_ORG} -l ${TEST_LEVEL} -r ${TEST_CLASSES}"
-		    //if (rc != 0) {
-			//error 'Salesforce deploy and test run failed.'
-		    //}
-		//}
+		    if (rc != 0) {
+			error 'Salesforce deploy and test run failed.'
+		    }
+		}
 
 
-		// -------------------------------------------------------------------------
-		// Example shows how to run a check-only deploy.
-		// -------------------------------------------------------------------------
-
-		//stage('Check Only Deploy') {
-		//    rc = command "\"${toolbelt}\" force:source:deploy  -x manifest/package.xml -u ${HUB_ORG} --testlevel ${TEST_LEVEL}"
-		//rmsg = bat returnStdout: true, script:"\"${toolbelt}\" force:source:deploy   -u ${HUB_ORG}"
-		//    if (rc != 0) {
-		//        error 'Salesforce deploy failed.'
-		//    }
-		//}
-		
+	
 	    }
 	}
 }
