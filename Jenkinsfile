@@ -47,19 +47,38 @@ node {
                 if (rc != 0) { error 'Salesforce org authorization failed.'}
                 println rc
 		}
+		
+		stage('Deploy and Run Tests') {
+			rc = command "\"${toolbelt}\" force:source:deploy  -x manifest/package.xml -u ${HUB_ORG} -l ${TEST_LEVEL}"
+			//rc = command "\"${toolbelt}\" force:source:deploy  -p force-app/. -u ${HUB_ORG} -l ${TEST_LEVEL}"
+		    if (rc != 0) {
+			error 'Salesforce deploy and test run failed.'
+		    }
+		}
+		
+		stage('Create Deployment Directory') {
+			rc= command "\"${toolbelt}\" force:source:convert -r force-app -d tmp_convert"
+			jar -cfM winter19.zip tmp_convert
+			rmdir /s tmp_convert
+		}
+		
+		stage('Deploy and Run Tests'){
+			rc = command "\"${toolbelt}\" force:mdapi:deploy -d winter19.zip -u ${HUB_ORG} -l ${TEST_LEVEL}"
+			//RunSpecifiedTests --runtests TestLanguageCourseTrigger"
+		}
 
 
 		// -------------------------------------------------------------------------
 		// Deploy metadata and execute unit tests.
 		// -------------------------------------------------------------------------
 
-		stage('Deploy and Run Tests') {
-		    rc = command "\"${toolbelt}\" force:source:deploy  -x manifest/package.xml -u ${HUB_ORG} -l ${TEST_LEVEL}"
+		//stage('Deploy and Run Tests') {
+			//rc = command "\"${toolbelt}\" force:source:deploy  -x manifest/package.xml -u ${HUB_ORG} -l ${TEST_LEVEL}"
 			//rc = command "\"${toolbelt}\" force:source:deploy  -p force-app/. -u ${HUB_ORG} -l ${TEST_LEVEL}"
-		    if (rc != 0) {
-			error 'Salesforce deploy and test run failed.'
-		    }
-		}
+		    //if (rc != 0) {
+			//error 'Salesforce deploy and test run failed.'
+		    //}
+		//}
 
 
 		// -------------------------------------------------------------------------
@@ -73,6 +92,7 @@ node {
 		//        error 'Salesforce deploy failed.'
 		//    }
 		//}
+		
 	    }
 	}
 }
