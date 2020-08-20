@@ -6,10 +6,10 @@ node {
     def SFDC_HOST = env.SFDC_HOST_SB
     def JWT_KEY_CRED_ID = env.JWT_CRED_ID_DH
     def CONNECTED_APP_CONSUMER_KEY=env.CONNECTED_APP_CONSUMER_KEY_SB
-	//def TEST_LEVEL='RunLocalTests'
-	def TEST_LEVEL= 'RunSpecifiedTests'
+	def TEST_LEVEL='RunLocalTests'
+	//def TEST_LEVEL= 'RunSpecifiedTests'
 	//def TEST_CLASSES = "AccountControllerTest,ContactControllerTest"
-	def TEST_CLASSES = "AccountControllerTest"
+	//def TEST_CLASSES = "AccountControllerTest"
 	def HUB_ORG = 'rsailaja@mazdausa.com.mazdadev'
 
     println 'KEY IS' 
@@ -68,8 +68,8 @@ node {
 
 		stage('Deploy and Run Tests') {
 			//rc = command "\"${toolbelt}\" force:source:deploy  -x manifest/package.xml -u ${HUB_ORG} -l ${TEST_LEVEL}"
-			//rc = command "\"${toolbelt}\" force:source:deploy  -p force-app/. -u ${HUB_ORG} -l ${TEST_LEVEL}"
-			rc = command "\"${toolbelt}\" force:source:deploy  -p force-app/. -u ${HUB_ORG} -l ${TEST_LEVEL} -r ${TEST_CLASSES}"
+			rc = command "\"${toolbelt}\" force:source:deploy  -p force-app/. -u ${HUB_ORG} -l ${TEST_LEVEL}"
+			//rc = command "\"${toolbelt}\" force:source:deploy  -p force-app/. -u ${HUB_ORG} -l ${TEST_LEVEL} -r ${TEST_CLASSES}"
 		    if (rc != 0) {
 			error 'Salesforce deploy and test run failed.'
 		    }
