@@ -5,7 +5,7 @@ node {
     //def HUB_ORG=env.HUB_ORG_DH
     def SFDC_HOST = env.SFDC_HOST_SB
     def JWT_KEY_CRED_ID = env.JWT_CRED_ID_DH
-    def CONNECTED_APP_CONSUMER_KEY=env.CONNECTED_APP_CONSUMER_KEY_SB
+    def CONNECTED_APP_CONSUMER_KEY=env.CONNECTED_APP_CONSUMER_KEY_DH
 	def TEST_LEVEL='RunLocalTests'
 	def HUB_ORG = 'rsailaja@mazdausa.com.mazdadev'
 
@@ -43,9 +43,8 @@ node {
 		// -------------------------------------------------------------------------
 
 		stage('Authorize to Salesforce') {
-			rc = command "\"${toolbelt}\" force:auth:logout --targetusername ${HUB_ORG} -p & \"${toolbelt}\" force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile \"${jwt_key_file}\" --instanceurl ${SFDC_HOST} --setdefaultusername"
-                	//rc = command "\"${toolbelt}\" force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile \"${jwt_key_file}\" --instanceurl ${SFDC_HOST}"
-			if (rc != 0) { error 'Salesforce org authorization failed.'}
+			rc = command "\"${toolbelt}\" force:auth:logout --targetusername ${HUB_ORG} -p & \"${toolbelt}\" force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile \"${jwt_key_file}\" --instanceurl ${SFDC_HOST}"
+                if (rc != 0) { error 'Salesforce org authorization failed.'}
                 println rc
 		}
 		
@@ -59,8 +58,10 @@ node {
 		
 		stage('Create Deployment Directory') {
 			rc= command "\"${toolbelt}\" force:source:convert -r force-app -d tmp_convert"
+			if (rc != 0) {
 			jar -cfM winter19.zip tmp_convert
-			rmdir /s tmp_convert
+			//rmdir /s tmp_convert
+			}
 		}
 		
 		stage('Deploy and Run Tests'){
