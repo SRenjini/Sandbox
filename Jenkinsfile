@@ -48,24 +48,9 @@ node {
                 println rc
 		}
 		
-		stage('Deploy and Run Tests') {
-			rc = command "\"${toolbelt}\" force:source:deploy  -x manifest/package.xml -u ${HUB_ORG} -l ${TEST_LEVEL}"
-			//rc = command "\"${toolbelt}\" force:source:deploy  -p force-app/. -u ${HUB_ORG} -l ${TEST_LEVEL}"
-		    if (rc != 0) {
-			error 'Salesforce deploy and test run failed.'
-		    }
-		}
-		
-		stage('Create Deployment Directory') {
-			rc= command "\"${toolbelt}\" force:source:convert -r force-app -d tmp_convert"
-			if (rc != 0) {
-			jar -cfM winter19.zip tmp_convert
-			//rmdir /s tmp_convert
-			}
-		}
 		
 		stage('Deploy and Run Tests'){
-			rc = command "\"${toolbelt}\" force:mdapi:deploy -d winter19.zip -u ${HUB_ORG} -l ${TEST_LEVEL}"
+			rc = command "\"${toolbelt}\" force:mdapi:deploy -d release_1.zip -u ${HUB_ORG} -l ${TEST_LEVEL}"
 			//RunSpecifiedTests --runtests TestLanguageCourseTrigger"
 		}
 
