@@ -50,7 +50,7 @@ node {
 		
 		
 		stage('Deploy and Run Tests'){
-			rc = command "\"${toolbelt}\" force:mdapi:deploy -d release_1.zip -u ${HUB_ORG} -l ${TEST_LEVEL}"
+			rc = command "\"${toolbelt}\" force:mdapi:deploy -d ./release_1.zip -u ${HUB_ORG} -l ${TEST_LEVEL}"
 			//RunSpecifiedTests --runtests TestLanguageCourseTrigger"
 		}
 
