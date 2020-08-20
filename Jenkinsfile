@@ -5,7 +5,7 @@ node {
     //def HUB_ORG=env.HUB_ORG_DH
     def SFDC_HOST = env.SFDC_HOST_SB
     def JWT_KEY_CRED_ID = env.JWT_CRED_ID_DH
-    def CONNECTED_APP_CONSUMER_KEY=env.CONNECTED_APP_CONSUMER_KEY_DH
+    def CONNECTED_APP_CONSUMER_KEY=env.CONNECTED_APP_CONSUMER_KEY_SB
 	def TEST_LEVEL='RunLocalTests'
 	def HUB_ORG = 'rsailaja@mazdausa.com.mazdadev'
 
