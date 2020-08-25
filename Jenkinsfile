@@ -5,7 +5,8 @@ node {
     //def HUB_ORG=env.HUB_ORG_DH
     def SFDC_HOST = env.SFDC_HOST_SB
     def JWT_KEY_CRED_ID = env.JWT_CRED_ID_DH
-    def CONNECTED_APP_CONSUMER_KEY=env.CONNECTED_APP_CONSUMER_KEY_SB
+    //def CONNECTED_APP_CONSUMER_KEY=env.CONNECTED_APP_CONSUMER_KEY_SB
+	def CONNECTED_APP_CONSUMER_KEY='3MVG9KsVczVNcM8zoxX.NRcO8pAPjpasK_GKirThC3oYqGE3iTX4cGkX_TZVJtoVlNXvUTfx3Ir_hD3mb8kv1'
 	def TEST_LEVEL='RunLocalTests'
 	//def TEST_LEVEL= 'RunSpecifiedTests'
 	//def TEST_CLASSES = "AccountControllerTest,ContactControllerTest"
