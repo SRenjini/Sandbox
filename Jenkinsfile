@@ -60,8 +60,9 @@ node {
 		// -------------------------------------------------------------------------
 		
 		//stage('Deploy and Run Tests'){
-			rc = command "\"${toolbelt}\" force:auth:logout --targetusername ${HUB_ORG} -p & \"${toolbelt}\" force:mdapi:deploy -f release_1.zip -u ${HUB_ORG} -l ${TEST_LEVEL}"
-			//RunSpecifiedTests --runtests TestLanguageCourseTrigger"
+			//rc = command "\"${toolbelt}\" force:auth:logout --targetusername ${HUB_ORG} -p & \"${toolbelt}\" force:mdapi:deploy -f release_1.zip -u ${HUB_ORG} -l ${TEST_LEVEL}"
+			rc = command "\"${toolbelt}\" force:source:deploy  -p force-app/. -u ${HUB_ORG} -l ${TEST_LEVEL}"
+		    //RunSpecifiedTests --runtests TestLanguageCourseTrigger"
 		//}
 
 
