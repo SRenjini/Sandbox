@@ -2,16 +2,16 @@
 
 node {
 
-    //def HUB_ORG=env.HUB_ORG_DH
-    def SFDC_HOST = env.SFDC_HOST_SB
+    def HUB_ORG=env.HUB_ORG_DH
+    def SFDC_HOST = env.SFDC_HOST_DH
     def JWT_KEY_CRED_ID = env.JWT_CRED_ID_DH
-    //def CONNECTED_APP_CONSUMER_KEY=env.CONNECTED_APP_CONSUMER_KEY_SB
-	def CONNECTED_APP_CONSUMER_KEY='3MVG9KsVczVNcM8zoxX.NRcO8pAPjpasK_GKirThC3oYqGE3iTX4cGkX_TZVJtoVlNXvUTfx3Ir_hD3mb8kv1'
+    def CONNECTED_APP_CONSUMER_KEY=env.CONNECTED_APP_CONSUMER_KEY_DH
+	//def CONNECTED_APP_CONSUMER_KEY='3MVG9KsVczVNcM8zoxX.NRcO8pAPjpasK_GKirThC3oYqGE3iTX4cGkX_TZVJtoVlNXvUTfx3Ir_hD3mb8kv1'
 	def TEST_LEVEL='RunLocalTests'
 	//def TEST_LEVEL= 'RunSpecifiedTests'
 	//def TEST_CLASSES = "AccountControllerTest,ContactControllerTest"
 	//def TEST_CLASSES = "AccountControllerTest"
-	def HUB_ORG = 'rsailaja@mazdausa.com.mazdadev'
+	//def HUB_ORG = 'rsailaja@mazdausa.com.mazdadev'
 
     println 'KEY IS' 
     println JWT_KEY_CRED_ID
@@ -58,24 +58,27 @@ node {
 		// Deploy metadata and execute unit tests for metadata package zip file
 		// -------------------------------------------------------------------------
 		
-		//stage('Deploy and Run Tests'){
-			//rc = command "\"${toolbelt}\" force:mdapi:deploy -f release_1.zip -u ${HUB_ORG} -l ${TEST_LEVEL}"
+		stage('Deploy and Run Tests'){
+			rc = command "\"${toolbelt}\" force:mdapi:deploy -f release_1.zip -u ${HUB_ORG} -l ${TEST_LEVEL}"
 			//RunSpecifiedTests --runtests TestLanguageCourseTrigger"
-		//}
+		        if (rc != 0) {
+			 error 'Salesforce deploy and test run failed.'
+		        }
+		}
 
 
 		//-------------------------------------------------------------------------
 		// Deploy metadata and execute unit tests.
 		// -------------------------------------------------------------------------
 
-		stage('Deploy and Run Tests') {
+		//stage('Deploy and Run Tests') {
 			//rc = command "\"${toolbelt}\" force:source:deploy  -x manifest/package.xml -u ${HUB_ORG} -l ${TEST_LEVEL}"
-			rc = command "\"${toolbelt}\" force:source:deploy  -p force-app/. -u ${HUB_ORG} -l ${TEST_LEVEL}"
+			//rc = command "\"${toolbelt}\" force:source:deploy  -p force-app/. -u ${HUB_ORG} -l ${TEST_LEVEL}"
 			//rc = command "\"${toolbelt}\" force:source:deploy  -p force-app/. -u ${HUB_ORG} -l ${TEST_LEVEL} -r ${TEST_CLASSES}"
-		    if (rc != 0) {
-			error 'Salesforce deploy and test run failed.'
-		    }
-		}
+		    //if (rc != 0) {
+			//error 'Salesforce deploy and test run failed.'
+		    //}
+		//}
 
 
 	
